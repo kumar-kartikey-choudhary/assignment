@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Flipr Project</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="admin.css">
+    <!-- Google Font (Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100 font-sans">
+
+    <!-- Header -->
+    <header class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Admin Panel</h1>
+            <a href="/index.html" class="bg-white text-blue-600 px-4 py-2 rounded-md font-medium hover:bg-gray-100">Back to Site</a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-6 py-8">
+
+        <!-- Tab Navigation -->
+        <div class="mb-6 border-b border-gray-200">
+            <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                <!-- Project Management Tab -->
+                <button id="tab-projects" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-blue-500 text-blue-600" aria-current="page">
+                    Project Management
+                </button>
+                <!-- Client Management Tab -->
+                <button id="tab-clients" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Client Management
+                </button>
+            </nav>
+        </div>
+
+        <!-- Tab Content -->
+        <div>
+            <!-- Project Management Panel -->
+            <div id="panel-projects" class="tab-panel">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Manage Projects</h2>
+                <!-- Form to Add/Edit Projects -->
+                <form id="project-form" class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <input type="hidden" id="projectId" name="id">
+                    <h3 class="text-xl font-semibold mb-4" id="form-title">Add New Project</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Project Name -->
+                        <div>
+                            <label for="projectName" class="block text-sm font-medium text-gray-700">Project Name</label>
+                            <input type="text" id="projectName" name="name" required
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <!-- Image URL -->
+                        <div>
+                            <label for="imageUrl" class="block text-sm font-medium text-gray-700">Image URL</label>
+                            <input type="text" id="imageUrl" name="imageUrl" required
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="https://placehold.co/600x400">
+                        </div>
+                    </div>
+                    <!-- Description -->
+                    <div class="mt-6">
+                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="description" name="description" rows="3" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    <!-- Category -->
+                    <div class="mt-6">
+                        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+                        <input type="text" id="category" name="category" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g., Web Design, Marketing">
+                    </div>
+                    <!-- Form Buttons -->
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="cancel-edit-btn"
+                            class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md font-medium hover:bg-gray-400 hidden">Cancel</button>
+                        <button type="submit"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700">Save Project</button>
+                    </div>
+                </form>
+
+                <!-- List of Existing Projects -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Existing Projects</h3>
+                <div id="project-list-container" class="bg-white p-6 rounded-lg shadow-md">
+                    <p id="projects-loading">Loading projects...</p>
+                    <div id="project-list" class="space-y-4">
+                        <!-- Projects will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Management Panel -->
+            <div id="panel-clients" class="tab-panel hidden">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Manage Clients</h2>
+                <!-- Form to Add/Edit Clients -->
+                <form id="client-form" class="bg-white p-6 rounded-lg shadow-md mb-8">
+                    <input type="hidden" id="clientId" name="id">
+                    <h3 class="text-xl font-semibold mb-4" id="client-form-title">Add New Client</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Client Name -->
+                        <div>
+                            <label for="clientName" class="block text-sm font-medium text-gray-700">Client Name</label>
+                            <input type="text" id="clientName" name="name" required
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <!-- Avatar URL -->
+                        <div>
+                            <label for="imageUrl" class="block text-sm font-medium text-gray-700">Image Url</label>
+                            <input type="text" id="avatarUrl" name="avatarUrl" required
+                                class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                                placeholder="https://placehold.co/100x100">
+                        </div>
+                    </div>
+                    <!-- Testimonial -->
+                    <div class="mt-6">
+                        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                        <textarea id="testimonial" name="testimonial" rows="3" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    <!-- Company -->
+                    <div class="mt-6">
+                        <label for="designation" class="block text-sm font-medium text-gray-700">Designation</label>
+                        <input type="text" id="company" name="company" required
+                            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                            placeholder="e.g., XYZ Corp">
+                    </div>
+                    <!-- Form Buttons -->
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="client-cancel-edit-btn"
+                            class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md font-medium hover:bg-gray-400 hidden">Cancel</button>
+                        <button type="submit"
+                            class="bg-blue-600 text-white px-4 py-2 rounded-md font-medium hover:bg-blue-700">Save Client</button>
+                    </div>
+                </form>
+
+                <!-- List of Existing Clients -->
+                <h3 class="text-2xl font-bold text-gray-800 mb-4">Existing Clients</h3>
+                <div id="client-list-container" class="bg-white p-6 rounded-lg shadow-md">
+                    <p id="clients-loading">Loading clients...</p>
+                    <div id="client-list" class="space-y-4">
+                        <!-- Clients will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Admin Panel. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Link to the JavaScript file -->
+    <script src="/admin.js"></script>
+
+</body>
+
+</html>
